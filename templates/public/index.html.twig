@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home | News Portal{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Latest News by Category</h1>
+
+        {% for category in categories %}
+            <div class="mb-5">
+                <h2>
+                    <a href="{{ path('public_category', {'id': category.id}) }}">
+                        {{ category.title }}
+                    </a>
+                </h2>
+
+                {% set newsList = category.news|slice(0, 3) %}
+                {% if newsList is not empty %}
+                    <div class="row">
+                        {% for news in newsList %}
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100">
+                                    {% if news.image %}
+                                        <img src="{{ asset('uploads/images/' ~ news.image) }}"
+                                             class="card-img-top" alt="{{ news.title }}">
+                                    {% else %}
+                                        <img src="{{ asset('uploads/images/default-news.png') }}"
+                                             class="card-img-top" alt="No Image" style="opacity:0.4;">
+                                    {% endif %}
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <a href="{{ path('public_news_detail', {'id': news.id}) }}">{{ news.title }}</a>
+                                        </h5>
+                                        <p class="card-text">{{ news.shortDescription|u.truncate(100, '...') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>No news in this category.</p>
+                {% endif %}
+            </div>
+        {% else %}
+            <p>No categories found.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

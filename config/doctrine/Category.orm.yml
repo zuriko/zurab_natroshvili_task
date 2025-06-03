@@ -1,0 +1,16 @@
+App\Entity\Category:
+    type: entity
+    table: category
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+    manyToMany:
+        news:
+            targetEntity: App\Entity\News
+            mappedBy: categories

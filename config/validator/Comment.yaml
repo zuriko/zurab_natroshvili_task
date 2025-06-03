@@ -1,0 +1,18 @@
+App\Entity\Comment:
+    properties:
+        author:
+            - NotBlank:
+                message: "Author name is required."
+            - Length:
+                min: 2
+                max: 255
+                minMessage: "Author name must be at least {{ limit }} characters long."
+                maxMessage: "Author name cannot be longer than {{ limit }} characters."
+        content:
+            - NotBlank:
+                message: "Comment content is required."
+            - Length:
+                min: 2
+                max: 1000
+                minMessage: "Comment must be at least {{ limit }} characters."
+                maxMessage: "Comment cannot be longer than {{ limit }} characters."

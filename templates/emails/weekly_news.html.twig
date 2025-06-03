@@ -1,0 +1,13 @@
+<h1>📰 Weekly News Summary</h1>
+
+<ul>
+    {% for news in newsList %}
+        <li>
+            <strong>{{ news.title }}</strong><br>
+            <em>{{ news.insertedAt|date('Y-m-d H:i') }}</em><br>
+            <p>{{ news.shortDescription }}</p>
+        </li>
+    {% else %}
+        <li>No news this week.</li>
+    {% endfor %}
+</ul>

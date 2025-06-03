@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create News{% endblock %}
+
+{% block body %}
+<div class="container mt-5" style="max-width:600px;">
+    <div class="card shadow rounded-4 news-form-card border-0">
+        <div class="card-body">
+            <h2 class="mb-4 text-center fw-bold">Create New News</h2>
+            {{ form_start(form) }}
+                {% if form.vars.errors|length > 0 %}
+                    <div class="alert alert-danger">
+                        {{ form_errors(form) }}
+                    </div>
+                {% endif %}
+                <div class="mb-3">{{ form_label(form.title) }}{{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}{{ form_errors(form.title) }}</div>
+                <div class="mb-3">{{ form_label(form.shortDescription) }}{{ form_widget(form.shortDescription, {'attr': {'class': 'form-control'}}) }}{{ form_errors(form.shortDescription) }}</div>
+                <div class="mb-3">{{ form_label(form.content) }}{{ form_widget(form.content, {'attr': {'class': 'form-control', 'rows': 5}}) }}{{ form_errors(form.content) }}</div>
+                <div class="mb-3">{{ form_label(form.insertedAt) }}{{ form_widget(form.insertedAt, {'attr': {'class': 'form-control'}}) }}{{ form_errors(form.insertedAt) }}</div>
+                <div class="mb-3">{{ form_label(form.imageFile) }}{{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}{{ form_errors(form.imageFile) }}</div>
+                <div class="mb-3">{{ form_label(form.categories) }}{{ form_widget(form.categories, {'attr': {'class': 'form-select', 'multiple': 'multiple'}}) }}{{ form_errors(form.categories) }}</div>
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <a href="{{ path('admin_news_index') }}" class="btn btn-outline-secondary rounded-pill px-4">Back to list</a>
+                    <button class="btn btn-primary rounded-pill px-4" style="min-width:140px;">Create</button>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

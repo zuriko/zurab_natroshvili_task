@@ -1,0 +1,8 @@
+App\Entity\Category:
+    properties:
+        title:
+            - NotBlank:
+                message: "Category title is required."
+            - Length:
+                max: 50
+                maxMessage: "Category title cannot be longer than {{ limit }} characters."

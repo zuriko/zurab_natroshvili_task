@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ category.title }}
+{% endblock %}
+
+{% block body %}
+	<div class="category-hero mb-5">
+		<div class="container text-center">
+			<h1 class="category-hero-title">{{ category.title }}</h1>
+			<p class="category-hero-desc">All news for this category</p>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row g-4">
+			{% for news in pagination %}
+				<div class="col-12">
+					<div class="card news-list-card flex-md-row shadow-sm h-100">
+						<div class="news-list-img-wrapper">
+							{% if news.image %}
+								<img src="{{ asset('uploads/images/' ~ news.image) }}" alt="{{ news.title }}" class="news-list-img">
+							{% else %}
+								<img src="{{ asset('uploads/images/default-news.png') }}" alt="No Image" class="news-list-img news-list-img-placeholder">
+							{% endif %}
+						</div>
+						<div class="card-body d-flex flex-column justify-content-between">
+							<div>
+								<h4 class="card-title mb-2">
+									<a href="{{ path('public_news_detail', {'id': news.id}) }}" class="news-list-title-link">
+										{{ news.title }}
+									</a>
+								</h4>
+								<div class="mb-2 text-muted small">
+									{{ news.insertedAt ? news.insertedAt|date('M d, Y') : '' }}
+								</div>
+								<p class="card-text">
+									{{ news.shortDescription|length > 200
+                                    ? news.shortDescription|slice(0, 200) ~ '...'
+                                    : news.shortDescription
+                                }}
+								</p>
+							</div>
+							<a href="{{ path('public_news_detail', {'id': news.id}) }}" class="btn btn-outline-success mt-2 align-self-start rounded-pill fw-semibold shadow-sm">
+								Read More
+							</a>
+						</div>
+					</div>
+				</div>
+			{% else %}
+				<div class="col-12">
+					<div class="alert alert-info text-center rounded-3 shadow-sm py-4">
+						No news found in this category.
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+		<div class="d-flex justify-content-center mt-5">
+			{{ knp_pagination_render(pagination) }}
+		</div>
+	</div>
+{% endblock %}

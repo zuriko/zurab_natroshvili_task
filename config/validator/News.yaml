@@ -1,0 +1,28 @@
+App\Entity\News:
+    properties:
+        title:
+            - NotBlank:
+                message: "Title is required."
+            - Length:
+                min: 3
+                max: 255
+                minMessage: "Title must be at least {{ limit }} characters."
+                maxMessage: "Title cannot be longer than {{ limit }} characters."
+        shortDescription:
+            - NotBlank:
+                message: "Short description is required."
+            - Length:
+                min: 5
+                max: 500
+                minMessage: "Short description must be at least {{ limit }} characters."
+                maxMessage: "Short description cannot be longer than {{ limit }} characters."
+        content:
+            - NotBlank:
+                message: "Content is required."
+            - Length:
+                min: 10
+                minMessage: "Content must be at least {{ limit }} characters."
+        insertedAt:
+            - NotNull:
+                message: "Date is required."
+        # image is optional

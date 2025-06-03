@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ category.title }}{% endblock %}
+
+{% block body %}
+    <h1 class="category-page-title">{{ category.title }}</h1>
+    {% if pagination|length > 0 %}
+        <div class="row g-4">
+            {% for news in pagination %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card news-list-card shadow-sm h-100 border-0">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">
+                                <a href="{{ path('public_news_detail', {'id': news.id}) }}" class="news-title-link">
+                                    {{ news.title }}
+                                </a>
+                            </h5>
+                            <p class="card-text text-muted">{{ news.shortDescription|slice(0, 150) ~ '...' }}</p>
+                            <div class="mt-auto">
+                                <span class="badge bg-primary mb-2">
+                                    {{ news.insertedAt|date('Y-m-d') }}
+                                </span>
+                                <a href="{{ path('public_news_detail', {'id': news.id}) }}"
+                                   class="btn btn-outline-success w-100 rounded-pill fw-semibold shadow-sm mt-2">
+                                    Read More
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    {% else %}
+        <div class="alert alert-info mt-4">No news in this category.</div>
+    {% endif %}
+
+    <a href="{{ path('public_homepage') }}" class="btn btn-outline-secondary mt-4 rounded-pill px-4">
+        ← Back to Home
+    </a>
+{% endblock %}

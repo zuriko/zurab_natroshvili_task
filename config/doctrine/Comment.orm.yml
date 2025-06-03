@@ -1,0 +1,25 @@
+App\Entity\Comment:
+    type: entity
+    table: comment
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        author:
+            type: string
+            length: 255
+        content:
+            type: text
+        createdAt:
+            type: datetime
+    manyToOne:
+        news:
+            targetEntity: App\Entity\News
+            inversedBy: comments
+            joinColumn:
+                name: news_id
+                referencedColumnName: id
+                nullable: false
+                onDelete: CASCADE

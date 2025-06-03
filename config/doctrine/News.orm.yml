@@ -1,0 +1,40 @@
+App\Entity\News:
+    type: entity
+    table: news
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        shortDescription:
+            type: text
+        content:
+            type: text
+        insertedAt:
+            type: datetime
+        image:
+            type: string
+            length: 255
+            nullable: true
+    manyToMany:
+        categories:
+            targetEntity: App\Entity\Category
+            inversedBy: news
+            joinTable:
+                name: news_category
+                joinColumns:
+                    news_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    category_id:
+                        referencedColumnName: id
+    oneToMany:
+        comments:
+            targetEntity: App\Entity\Comment
+            mappedBy: news
+            cascade: [persist, remove]
+            orphanRemoval: true

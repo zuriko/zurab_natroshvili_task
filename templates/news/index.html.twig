@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}News Management
+{% endblock %}
+
+{% block body %}
+	{% include '_admin_nav.html.twig' %}
+
+	<div class="container mt-4">
+		<div class="d-flex justify-content-between align-items-center mb-3">
+			<h1 class="h3 fw-bold">News Management</h1>
+			<a href="{{ path('admin_news_new') }}" class="btn btn-success rounded-pill fw-bold shadow-sm px-4">+ Create News</a>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-striped table-hover align-middle news-table">
+				<thead class="table-dark">
+					<tr>
+						<th>ID</th>
+						<th>Title</th>
+						<th>Short Description</th>
+						<th>Inserted At</th>
+						<th>Categories</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for news in news %}
+						<tr>
+							<td>{{ news.id }}</td>
+							<td class="fw-semibold">{{ news.title }}</td>
+							<td>
+								{{ news.shortDescription|length > 40 ? news.shortDescription|slice(0, 40) ~ '…' : news.shortDescription }}
+							</td>
+							<td>{{ news.insertedAt ? news.insertedAt|date('Y-m-d H:i') : '-' }}</td>
+							<td>
+								{% for cat in news.categories %}
+									<span class="badge bg-info text-dark">{{ cat.title }}</span>
+								{% else %}
+									<span class="text-muted">None</span>
+								{% endfor %}
+							</td>
+							<td>
+								<a href="{{ path('admin_news_show', {'id': news.id}) }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3">View</a>
+								<a href="{{ path('admin_news_edit', {'id': news.id}) }}" class="btn btn-sm btn-primary rounded-pill px-3">Edit</a>
+								<form method="post" action="{{ path('admin_news_delete', {'id': news.id}) }}" style="display:inline-block;" onsubmit="return confirm('Are you sure you want to delete this news?');">
+									<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ news.id) }}">
+									<button class="btn btn-sm btn-danger rounded-pill px-3">Delete</button>
+								</form>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="6" class="text-center text-muted">No news found.</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<div class="d-flex justify-content-center mt-4">
+				{{ knp_pagination_render(news) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}
