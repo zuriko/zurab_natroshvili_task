@@ -156,3 +156,6 @@ Main Pages:
 
 Controllers: src/Controller/
 Templates: templates/
+Tests: \tests\Integration
+WeeklyNewsRepost:  Command\WeeklyNewsReportCommand.php
+Validators: validator\
